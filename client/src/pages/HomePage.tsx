@@ -9,6 +9,7 @@ import type { HousingUnit } from '../types/housingUnit';
 import HousingUnitList from '../components/housing-units/HousingUnitList';
 import CreateHousingUnitForm from '../components/forms/CreatHousingUnitForm';
 import CreateOccupantForm from '../components/forms/CreatOccupantForm';
+import AssignOccupantForm from '../components/forms/AssignOccupantForm';
 
 
 function HomePage() {
@@ -68,11 +69,6 @@ function HomePage() {
       </section>
 
       <section>
-        <h2>Créer un logement</h2>
-        <CreateHousingUnitForm onSuccess={loadHousingUnits} />
-      </section>
-
-      <section>
         <h2>Liste des logements</h2>
 
         {loading && <p>Chargement...</p>}
@@ -86,9 +82,20 @@ function HomePage() {
           <HousingUnitList housingUnits={housingUnits} />
         )}
       </section>
+
+      <section>
+        <h2>Créer un logement</h2>
+        <CreateHousingUnitForm onSuccess={loadHousingUnits} />
+      </section>
+
       <section>
         <h2>Créer un occupant</h2>
         <CreateOccupantForm />
+      </section>
+
+      <section>
+        <h2>Affecter un occupant à un logement</h2>
+        <AssignOccupantForm />
       </section>
     </main>
   );
