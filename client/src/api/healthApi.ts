@@ -1,7 +1,8 @@
 import { apiFetch } from './client';
 
 export interface HealthResponse {
-  status: string;
+  success: string;
+  message: string;
 }
 
 export function getHealth() {
