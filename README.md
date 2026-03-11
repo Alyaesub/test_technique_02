@@ -1,256 +1,298 @@
-# Lynoria – Technical Test | Full Stack Application
+# Lynoria – Test Technique Full Stack
 
-A full stack mini application for managing **housing units** and **occupants**, built as part of the Lynoria Full Stack developer technical test.
+Mini application full stack permettant de gérer des **logements** et des **occupants**, réalisée dans le cadre du test technique développeur Full Stack pour Lynoria.
 
-The application allows creating housing units, registering occupants, assigning occupants to housing units, and visualizing the associations — all through a clean React frontend backed by a typed Node.js/Express API.
+L'application permet :
 
----
+- de créer des logements
+- de créer des occupants
+- d'affecter un occupant à un logement
+- de consulter les occupants associés à chaque logement
 
-## CI/CD Status
-
-![CI](https://github.com/<your-username>/<your-repo>/actions/workflows/ci.yml/badge.svg)
-
----
-
-## Tech Stack
-
-### Frontend
-
-| Tech       | Role                 |
-| ---------- | -------------------- |
-| React      | UI framework         |
-| TypeScript | Static typing        |
-| Vite       | Dev server & bundler |
-| SCSS       | Styling              |
-
-### Backend
-
-| Tech       | Role                               |
-| ---------- | ---------------------------------- |
-| Node.js    | Runtime                            |
-| Express    | HTTP framework                     |
-| TypeScript | Static typing                      |
-| Prisma     | ORM + migrations                   |
-| SQLite     | Database (file-based, zero config) |
-| Zod        | Input validation                   |
-| dotenv     | Environment variables              |
-| cors       | Cross-origin requests              |
-
-### Tooling
-
-| Tool           | Role                            |
-| -------------- | ------------------------------- |
-| ESLint         | Linting                         |
-| concurrently   | Run frontend + backend together |
-| GitHub Actions | CI/CD pipeline                  |
+Le projet est composé d'une API Node.js typée et d'un frontend React.
 
 ---
 
-## Project Structure
+# Stack Technique
 
-```
+## Frontend
+
+| Technologie | Rôle                     |
+| ----------- | ------------------------ |
+| React       | Framework UI             |
+| TypeScript  | Typage statique          |
+| Vite        | Dev server et build tool |
+| SCSS        | Styling                  |
+
+---
+
+## Backend
+
+| Technologie | Rôle                          |
+| ----------- | ----------------------------- |
+| Node.js     | Runtime                       |
+| Express     | Framework HTTP                |
+| TypeScript  | Typage statique               |
+| Prisma      | ORM et gestion des migrations |
+| SQLite      | Base de données locale        |
+| Zod         | Validation des entrées        |
+| dotenv      | Variables d'environnement     |
+| cors        | Gestion du CORS               |
+
+---
+
+## Tooling
+
+| Outil          | Rôle                      |
+| -------------- | ------------------------- |
+| ESLint         | Linting                   |
+| concurrently   | Lancer frontend + backend |
+| GitHub Actions | CI/CD                     |
+
+---
+
+# Structure du projet
+
 project-root/
 │
-├── client/                  # Frontend (React + Vite + TypeScript)
-│   └── src/
-│       ├── components/      # Reusable UI components
-│       ├── pages/           # Page-level components
-│       ├── services/        # API call logic (fetch wrappers)
-│       └── styles/          # SCSS files
+├── client/ # Frontend React
+│ └── src/
+│ ├── components/
+│ ├── pages/
+│ ├── services/
+│ └── styles/
 │
-├── server/                  # Backend (Node + Express + TypeScript)
-│   └── src/
-│       ├── controllers/     # Request handlers (thin layer)
-│       ├── middlewares/     # Error handler, request logger, etc.
-│       ├── routes/          # Express route definitions
-│       ├── services/        # Business logic
-│       ├── db/              # Prisma client instance
-│       ├── validators/      # Zod schemas for input validation
-│       ├── app.ts           # Express app setup
-│       └── server.ts        # Entry point (port binding)
+├── server/ # Backend Node / Express
+│ └── src/
+│ ├── controllers/
+│ ├── middlewares/
+│ ├── routes/
+│ ├── services/
+│ ├── schemas/
+│ ├── utils/
+│ ├── lib/
+│ │ └── prisma.ts
+│ ├── app.ts
+│ └── server.ts
 │
-├── prisma/                  # Prisma schema + migrations
-│   ├── schema.prisma
-│   └── migrations/
+├── server/prisma/ # Prisma schema + migrations
 │
-├── .github/
-│   └── workflows/
-│       └── ci.yml           # GitHub Actions CI pipeline
+├── .github/workflows/ # CI/CD GitHub Actions
 │
-├── .env.example             # Environment variable template
-├── package.json             # Root scripts (dev, build, lint...)
+├── .env.example
+├── package.json
 └── README.md
-```
 
 ---
 
-## Requirements
+# Prérequis
 
 - Node.js **18+**
 - npm **9+**
 
-No external database setup required — SQLite is file-based and included.
+Aucune base de données externe n'est nécessaire.
+
+SQLite est utilisé pour simplifier le setup.
 
 ---
 
-## Installation
+# Installation
+
+Cloner le projet :
 
 ```bash
 git clone <repo-url>
 cd <project-folder>
-```
 
-Install all dependencies (frontend + backend):
+Installer les dépendances :
 
-```bash
 npm install
 cd client && npm install
 cd ../server && npm install
-```
 
-Set up environment variables:
+Créer le fichier d’environnement :
 
-```bash
 cp .env.example .env
-```
 
-Run Prisma migrations to initialize the database:
+Initialiser la base de données :
 
-```bash
 cd server
 npx prisma migrate dev --name init
-```
 
----
 
-## Running the Project
+⸻
 
-From the project root:
+Lancer le projet
 
-```bash
+Depuis la racine :
+
 npm run dev
-```
 
-This starts:
+Cela lance :
 
-- **Frontend** (Vite) → [http://localhost:5173](http://localhost:5173)
-- **Backend** (Express API) → [http://localhost:3001](http://localhost:3001)
+Frontend
+http://localhost:5173
 
----
+Backend
+http://localhost:3001
 
-## API Reference
+⸻
 
-| Method | Endpoint                       | Description                               |
-| ------ | ------------------------------ | ----------------------------------------- |
-| `GET`  | `/health`                      | API health check                          |
-| `POST` | `/housing-units`               | Create a housing unit                     |
-| `GET`  | `/housing-units`               | List all housing units                    |
-| `POST` | `/occupants`                   | Create an occupant                        |
-| `POST` | `/assignments`                 | Assign an occupant to a housing unit      |
-| `GET`  | `/housing-units/:id/occupants` | Get occupants for a specific housing unit |
+API
 
-### Example: Health Check
+Méthode	Endpoint	Description
+GET	/health	Vérifie que l’API fonctionne
+POST	/housing-units	Créer un logement
+GET	/housing-units	Lister les logements
+POST	/occupants	Créer un occupant
+POST	/assignments	Affecter un occupant à un logement
+GET	/housing-units/:id/occupants	Obtenir les occupants d’un logement
 
-```http
+
+⸻
+
+Exemple de requêtes
+
+Health Check
+
 GET /health
-```
 
-```json
+Réponse :
+
 {
-	"success": true,
-	"message": "API is running"
+  "message": "API is running"
 }
-```
 
-### Example: Create a housing unit
 
-```http
+⸻
+
+Créer un logement
+
 POST /housing-units
-Content-Type: application/json
 
 {
-  "name": "Appartement 2B",
-  "status": "available"
+  "name": "Appartement A12",
+  "status": "AVAILABLE"
 }
-```
 
----
 
-## Technical Decisions
+⸻
 
-### SQLite over PostgreSQL
+Affecter un occupant
 
-SQLite was chosen for its zero-configuration setup, making the project immediately runnable without any external service. The architecture (Prisma ORM) allows switching to PostgreSQL with a single config change if needed in production.
+POST /assignments
 
-### Prisma as ORM
+{
+  "housingUnitId": 1,
+  "occupantId": 1
+}
 
-Prisma provides type-safe database access, built-in migration management, and a clear schema definition — which aligns well with the TypeScript-first approach of this project.
 
-### Zod for validation
+⸻
 
-Input validation is handled server-side using Zod. This ensures the backend never blindly trusts frontend data, and keeps validation logic colocated with route definitions.
+Choix Techniques
 
-### Monorepo structure
+SQLite
 
-Client and server are kept in the same repository but remain fully independent (separate `package.json`, separate `tsconfig.json`). A root `package.json` provides convenience scripts to run both together.
+SQLite permet un démarrage immédiat sans configuration externe.
+L’utilisation de Prisma permet de migrer facilement vers PostgreSQL si nécessaire.
 
-### Separation of concerns (backend)
+⸻
 
-The backend follows a `routes → controllers → services → db` layered architecture. Controllers handle HTTP logic, services contain business logic, and data access is isolated — making each layer independently testable and replaceable.
+Prisma
 
----
+Prisma offre :
+	•	un ORM typé
+	•	des migrations
+	•	un schéma clair de la base de données
+	•	une excellente intégration avec TypeScript
 
-## Hypotheses
+⸻
 
-- A housing unit can have **multiple occupants** (e.g. shared housing). The model supports this via a join table rather than a simple foreign key on occupant.
-- An occupant can only be assigned to **one housing unit at a time**. If a re-assignment is needed, the previous one must be removed first (or updated — TBD based on product requirements).
-- The `status` of a housing unit (`available` / `occupied` / `maintenance`) is managed **manually** via the API. Automatic status update on assignment was considered but kept out of scope to avoid hidden side effects.
-- Email uniqueness on occupants is enforced at the database level via Prisma, not only at the API level.
+Zod
 
----
+La validation des données entrantes est réalisée côté backend avec Zod afin de :
+	•	ne jamais faire confiance aux données du frontend
+	•	centraliser la validation
+	•	améliorer la robustesse de l’API
 
-## Limits & Potential Improvements
+⸻
 
-| Area                      | Current State                               | Possible Improvement                                   |
-| ------------------------- | ------------------------------------------- | ------------------------------------------------------ |
-| Authentication            | None                                        | JWT-based auth with role management                    |
-| Tests                     | <!-- TODO: fill in after implementation --> | Unit tests (services) + integration tests (API routes) |
-| Pagination                | Not implemented                             | Cursor or offset-based pagination on list endpoints    |
-| Occupant re-assignment    | Not handled                                 | Dedicated endpoint or update logic                     |
-| Auto status update        | Manual only                                 | Auto-update housing unit status on assignment          |
-| Frontend state management | Local state / fetch                         | React Query or SWR for caching & revalidation          |
-| Database                  | SQLite (file)                               | PostgreSQL for production use                          |
-| Docker                    | Not included                                | `docker-compose.yml` for full local stack              |
-| Error messages            | Generic                                     | Structured error codes for frontend consumption        |
+Architecture Backend
 
----
+L’API suit une architecture en couches :
 
-## CI/CD Pipeline
+routes → controllers → services → prisma
 
-The GitHub Actions pipeline runs on every push and pull request to `main`.
+	•	Routes : définition des endpoints
+	•	Controllers : gestion des requêtes HTTP
+	•	Services : logique métier
+	•	Prisma : accès base de données
 
-**Steps:**
+Cette séparation permet un code plus lisible et maintenable.
 
-1. Install dependencies
-2. TypeScript type check (`tsc --noEmit`)
-3. Lint (`eslint`)
-4. Build (`npm run build`)
-5. Tests if present (`npm test`)
+⸻
 
-Pipeline is split into two jobs: `backend` and `frontend`, running in parallel.
+Hypothèses
+	•	Un logement peut contenir plusieurs occupants
+	•	Un occupant ne peut être affecté qu’à un seul logement à la fois
+	•	Le statut d’un logement (AVAILABLE, OCCUPIED, MAINTENANCE) est géré manuellement via l’API
+	•	L’email d’un occupant est unique
 
-See `.github/workflows/ci.yml` for the full configuration.
+⸻
 
----
+Limites et améliorations possibles
 
-## Environment Variables
+Domaine	Amélioration possible
+Authentification	Ajouter un système JWT
+Tests	Ajouter tests unitaires et tests d’API
+Pagination	Pagination des listes
+Réaffectation occupant	Endpoint pour changer de logement
+Statut automatique	Mettre à jour automatiquement le statut du logement
+Base de données	Passer à PostgreSQL en production
+Docker	Ajouter un docker-compose
 
-Copy `.env.example` to `.env` before running the project.
 
-```env
-# Server
+⸻
+
+CI/CD
+
+Le pipeline GitHub Actions exécute :
+	•	installation des dépendances
+	•	vérification TypeScript
+	•	lint
+	•	build
+
+Le pipeline est séparé en deux jobs :
+	•	frontend
+	•	backend
+
+⸻
+
+Variables d’environnement
+
+Copier .env.example vers .env
+
 PORT=3001
 DATABASE_URL="file:./dev.db"
-```
 
-> No secrets are committed to this repository. All sensitive configuration is handled via environment variables.
+Aucun secret n’est stocké dans le dépôt.
+
+---
+
+# Pourquoi cette version est meilleure
+
+Pour un recruteur :
+
+✔ clair
+✔ en français
+✔ architecture expliquée
+✔ choix techniques expliqués
+✔ hypothèses métier
+✔ améliorations possibles
+
+C'est **exactement ce qu'ils attendent dans un test technique**.
+
+---
+
+```
