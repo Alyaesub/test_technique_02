@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from 'express'
 import { createHousingUnit } from '../services/housingUnit.service'
 import { getHousingUnits } from '../services/housingUnit.service'
 import { getHousingUnitOccupants } from '../services/housingUnit.service'
+import { deleteHousingUnit } from '../services/housingUnit.service'
 
 //function qui cré un logment
 export async function createHousingUnitController(
@@ -62,5 +63,29 @@ export async function getHousingUnitOccupantsController(
     })
   } catch (error) {
     next(error)
+  }
+}
+
+//function qui delet un logement 
+export async function deleteHousingUnitController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const id = Number(req.params.id);
+
+    if (Number.isNaN(id)) {
+      return res.status(400).json({
+        error: 'INVALID_ID',
+        message: 'Housing unit id must be a number',
+      });
+    }
+
+    await deleteHousingUnit(id);
+
+    return res.status(204).send();
+  } catch (error) {
+    next(error);
   }
 }

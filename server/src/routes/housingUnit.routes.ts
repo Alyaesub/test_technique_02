@@ -5,6 +5,7 @@ import { createHousingUnitSchema,} from '../schemas/housingUnit.schema'
 import { createHousingUnitController } from '../controllers/housingUnit.controller'
 import { getHousingUnitsController } from '../controllers/housingUnit.controller'
 import { getHousingUnitOccupantsController } from '../controllers/housingUnit.controller'
+import { deleteHousingUnitController } from '../controllers/housingUnit.controller'
 
 const router = Router()
 
@@ -12,5 +13,6 @@ const router = Router()
 router.post('/', validate(createHousingUnitSchema), createHousingUnitController)
 router.get('/', getHousingUnitsController)
 router.get('/:id/occupants', getHousingUnitOccupantsController)
+router.delete('/:id', deleteHousingUnitController)
 
 export default router

@@ -5,12 +5,12 @@ import { AppError } from '../utils/appError'
 
 //function qui créé un logement
 export async function createHousingUnit(data: CreateHousingUnitInput) {
-  const housingUnit = await prisma.housingUnit.create({
+  return prisma.housingUnit.create({
     data: {
       name: data.name,
       status: data.status ?? 'AVAILABLE',
     },
-  })
+  });
 }
 
 //function qui récupére en get les logements
@@ -49,4 +49,23 @@ export async function getHousingUnitOccupants(housingUnitId: number) {
     },
     occupants: housingUnit.assignments.map((assignment) => assignment.occupant),
   }
+}
+
+//function delet logement
+export async function deleteHousingUnit(id: number) {
+  const housingUnit = await prisma.housingUnit.findUnique({
+    where: { id }
+  })
+
+  if (!housingUnit) {
+    throw new AppError(404, 'HOUSING_UNIT_NOT_FOUND', 'Housing unit not found')
+  }
+
+  await prisma.assignment.deleteMany({
+    where: { housingUnitId: id }
+  })
+
+  return prisma.housingUnit.delete({
+    where: { id }
+  })
 }

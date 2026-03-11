@@ -5,7 +5,11 @@ import { getHousingUnits } from '../../api/housingUnitApi';
 import type { Occupant } from '../../types/occupant';
 import type { HousingUnit } from '../../types/housingUnit';
 
-function AssignOccupantForm() {
+interface AssignOccupantFormProps {
+  onSuccess?: () => Promise<void> | void;
+}
+
+function AssignOccupantForm({ onSuccess }: AssignOccupantFormProps) {
   const [occupants, setOccupants] = useState<Occupant[]>([]);
   const [housingUnits, setHousingUnits] = useState<HousingUnit[]>([]);
 
@@ -24,7 +28,7 @@ function AssignOccupantForm() {
         setOccupants(occupantsResponse.data);
         setHousingUnits(housingResponse.data);
       } catch (err) {
-        console.error(err)
+        console.error(err);
         setError('Impossible de charger les données.');
       }
     }
@@ -52,8 +56,10 @@ function AssignOccupantForm() {
       setSuccess('Occupant affecté au logement.');
       setOccupantId('');
       setHousingUnitId('');
+
+      await onSuccess?.();
     } catch (err) {
-      console.error(err)
+      console.error(err);
       setError('Erreur lors de l’affectation.');
     }
   }
@@ -99,7 +105,7 @@ function AssignOccupantForm() {
       {error && <p className="housing-form__error">{error}</p>}
       {success && <p className="housing-form__success">{success}</p>}
 
-      <button className="housing-form__submit">
+      <button className="housing-form__submit" type="submit">
         Affecter l’occupant
       </button>
     </form>
