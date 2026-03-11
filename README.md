@@ -326,17 +326,6 @@ Docker	Ajouter un docker-compose
 Authentification	JWT / RBAC
 
 
-⸻
-
-Aperçu
-
-Ajouter un screenshot de l’application peut faciliter la compréhension du projet.
-
-docs/app-screenshot.png
-
-
-⸻
-
 Auteur
 
 Projet réalisé dans le cadre du test technique Full Stack Lynoria.
