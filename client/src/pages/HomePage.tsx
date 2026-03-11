@@ -1,14 +1,35 @@
 import { useEffect, useState } from 'react';
+
+//Api, utils et types
 import { getHealth } from '../api/healthApi';
 import { getHousingUnits } from '../api/housingUnitApi';
-import HousingUnitList from '../components/housing-units/HousingUnitList';
 import type { HousingUnit } from '../types/housingUnit';
+
+//components
+import HousingUnitList from '../components/housing-units/HousingUnitList';
+import CreateHousingUnitForm from '../components/forms/CreatHousingUnitForm';
+import CreateOccupantForm from '../components/forms/CreatOccupantForm';
+
 
 function HomePage() {
   const [health, setHealth] = useState<string>('Vérification...');
   const [housingUnits, setHousingUnits] = useState<HousingUnit[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+
+  async function loadHousingUnits() {
+    try {
+      setError('');
+      const response = await getHousingUnits();
+      setHousingUnits(response.data);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erreur inconnue');
+      }
+    }
+  }
 
   useEffect(() => {
     async function loadData() {
@@ -47,10 +68,14 @@ function HomePage() {
       </section>
 
       <section>
+        <h2>Créer un logement</h2>
+        <CreateHousingUnitForm onSuccess={loadHousingUnits} />
+      </section>
+
+      <section>
         <h2>Liste des logements</h2>
 
         {loading && <p>Chargement...</p>}
-
         {error && <p>{error}</p>}
 
         {!loading && !error && housingUnits.length === 0 && (
@@ -60,6 +85,10 @@ function HomePage() {
         {!loading && !error && housingUnits.length > 0 && (
           <HousingUnitList housingUnits={housingUnits} />
         )}
+      </section>
+      <section>
+        <h2>Créer un occupant</h2>
+        <CreateOccupantForm />
       </section>
     </main>
   );
