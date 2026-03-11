@@ -29,3 +29,9 @@ export function getHousingUnitOccupants(housingUnitId: string) {
     `/housing-units/${housingUnitId}/occupants`
   );
 }
+
+export function deleteHousingUnit(id: number) {
+  return apiFetch<void>(`/housing-units/${id}`, {
+    method: 'DELETE',
+  })
+}
