@@ -56,6 +56,17 @@ Le projet est composé :
 
 ---
 
+## Tests
+
+Tests unitaires réalisés avec Vitest.
+
+Commande :
+
+npm test
+npm run test
+
+---
+
 # Fonctionnalités de l'application
 
 ## Gestion des logements
@@ -135,6 +146,31 @@ Aucune base de données externe n’est nécessaire.
 SQLite est utilisé pour simplifier le setup.
 
 ---
+
+⚠️⚠️⚠️
+
+Note sur les vulnérabilités npm audit
+
+Un audit de sécurité (npm audit) peut signaler certaines vulnérabilités provenant de dépendances transitives de Prisma (notamment via @prisma/dev, hono, chevrotain ou lodash).
+
+Ces vulnérabilités ne sont pas directement utilisées par l’application mais proviennent d’outils internes de l’écosystème Prisma utilisés lors du développement ou du build.
+
+La correction automatique proposée par npm audit nécessite l’utilisation de :
+
+npm audit fix --force
+
+Cette commande installe une version majeure différente de Prisma, ce qui peut introduire des breaking changes et casser le projet.
+
+Dans le cadre de ce test technique, le choix a été de :
+• privilégier la stabilité du projet
+• éviter une mise à jour majeure risquée
+• documenter clairement ce point
+
+Les vulnérabilités restantes sont donc liées aux dépendances internes de Prisma et non à la logique applicative de l’API.
+
+Une mise à jour complète de Prisma pourra être effectuée ultérieurement lorsque la migration vers la nouvelle version pourra être réalisée proprement.
+
+⚠️⚠️⚠️
 
 # Installation
 

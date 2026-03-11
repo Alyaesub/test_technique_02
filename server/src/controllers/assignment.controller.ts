@@ -1,5 +1,3 @@
-//controller qui gére l'assignement d'un logement a un occupant
-
 import type { NextFunction, Request, Response } from 'express'
 import { createAssignment } from '../services/assignment.service'
 

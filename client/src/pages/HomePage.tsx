@@ -63,7 +63,7 @@ async function handleDeleteHousingUnit(id: number) {
           getHousingUnits(),
         ]);
 
-        setHealth(healthResponse.status);
+        setHealth(healthResponse.message);
         setHousingUnits(housingUnitsResponse.data);
       } catch (err) {
         if (err instanceof Error) {

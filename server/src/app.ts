@@ -1,5 +1,4 @@
 import express from 'express'
-import { rateLimit } from 'express-rate-limit'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
@@ -15,15 +14,6 @@ import assignmentRoutes from './routes/assignment.routes'
 
 dotenv.config()
 const app = express()
-
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, 
-    limit: 10, 
-    standardHeaders: false,
-    legacyHeaders: false, 
-})
-
-app.use(limiter)
 
 //config routes cors et express
 app.use(
