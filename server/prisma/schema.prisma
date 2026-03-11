@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum HousingUnitStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTENANCE
+}
+
+model HousingUnit {
+  id          Int                @id @default(autoincrement())
+  name        String
+  status      HousingUnitStatus  @default(AVAILABLE)
+  assignments Assignment[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model Occupant {
+  id          Int                @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String             @unique
+  assignments Assignment[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model Assignment {
+  id            Int         @id @default(autoincrement())
+  housingUnitId Int
+  occupantId    Int         @unique
+  assignedAt    DateTime    @default(now())
+
+  housingUnit   HousingUnit @relation(fields: [housingUnitId], references: [id], onDelete: Cascade)
+  occupant      Occupant    @relation(fields: [occupantId], references: [id], onDelete: Cascade)
+
+  @@index([housingUnitId])
+}
