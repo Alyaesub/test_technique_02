@@ -1,4 +1,4 @@
 export interface CreateAssignmentPayload {
-  housingUnitId: string;
-  occupantId: string;
+  housingUnitId: number;
+  occupantId: number;
 }

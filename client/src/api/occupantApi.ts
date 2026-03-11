@@ -7,3 +7,7 @@ export function createOccupant(payload: CreateOccupantPayload) {
     body: JSON.stringify(payload),
   });
 }
+
+export function getOccupants() {
+  return apiFetch<{ data: Occupant[] }>('/occupants');
+}

@@ -1,7 +1,7 @@
 export type HousingUnitStatus = 'AVAILABLE' | 'OCCUPIED' | 'MAINTENANCE';
 
 export interface HousingUnit {
-  id: string;
+  id: number;
   name: string;
   status: HousingUnitStatus;
 }
