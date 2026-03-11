@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import type { HousingUnit } from '../../types/housingUnit';
 import { formatStatus } from '../../utils/formStatus';
+import HousingUnitOccupants from './HousingUnitOccupants';
 
 interface HousingUnitCardProps {
   housingUnit: HousingUnit;
 }
 
 function HousingUnitCard({ housingUnit }: HousingUnitCardProps) {
+  const [showOccupants, setShowOccupants] = useState(false);
+
   return (
     <article className="housing-card">
       <div className="housing-card__header">
@@ -18,7 +22,16 @@ function HousingUnitCard({ housingUnit }: HousingUnitCardProps) {
         </span>
       </div>
 
-      <p className="housing-card__id">ID : {housingUnit.id}</p>
+      <button
+        className="housing-card__toggle"
+        onClick={() => setShowOccupants(!showOccupants)}
+      >
+        {showOccupants ? 'Masquer occupants' : 'Voir occupants'}
+      </button>
+
+      {showOccupants && (
+        <HousingUnitOccupants housingUnitId={housingUnit.id} />
+      )}
     </article>
   );
 }

@@ -6,6 +6,13 @@ interface HousingUnitsResponse {
   data: HousingUnit[];
 }
 
+interface HousingUnitOccupantsResponse {
+  data: {
+    housingUnit: HousingUnit;
+    occupants: Occupant[];
+  };
+}
+
 export function getHousingUnits() {
   return apiFetch<HousingUnitsResponse>('/housing-units');
 }
@@ -18,5 +25,7 @@ export function createHousingUnit(payload: CreateHousingUnitPayload) {
 }
 
 export function getHousingUnitOccupants(housingUnitId: string) {
-  return apiFetch<Occupant[]>(`/housing-units/${housingUnitId}/occupants`);
+  return apiFetch<HousingUnitOccupantsResponse>(
+    `/housing-units/${housingUnitId}/occupants`
+  );
 }
