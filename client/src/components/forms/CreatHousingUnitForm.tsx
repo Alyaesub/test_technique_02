@@ -11,6 +11,7 @@ function CreateHousingUnitForm({ onSuccess }: CreateHousingUnitFormProps) {
   const [status, setStatus] = useState<HousingUnitStatus>('AVAILABLE');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,19 +22,27 @@ function CreateHousingUnitForm({ onSuccess }: CreateHousingUnitFormProps) {
     }
 
     try {
-      setSubmitting(true);
-      setError('');
+        setSubmitting(true);
+        setError('');
+        setSuccessMessage('');
 
-      await createHousingUnit({
-        name: name.trim(),
-        status,
-      });
+        await createHousingUnit({
+          name: name.trim(),
+          status,
+        });
 
-      setName('');
-      setStatus('AVAILABLE');
+        setName('');
+        setStatus('AVAILABLE');
 
-      await onSuccess();
-    } catch (err) {
+        setSuccessMessage('Logement créé avec succès.');
+
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 4000);
+
+        await onSuccess();
+
+      } catch (err){
       if (err instanceof Error) {
         setError(err.message);
       } else {
@@ -45,42 +54,58 @@ function CreateHousingUnitForm({ onSuccess }: CreateHousingUnitFormProps) {
   }
 
   return (
-    <form className="housing-form" onSubmit={handleSubmit}>
-      <div className="housing-form__group">
-        <label htmlFor="housing-name" className="housing-form__label">
-          Nom du logement
-        </label>
-        <input
-          id="housing-name"
-          type="text"
-          className="housing-form__input"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="Ex : Appartement A14"
-        />
+    <form className="housing-form housing-form--card" onSubmit={handleSubmit}>
+      <div className="housing-form__grid">
+
+        <div className="housing-form__group">
+          <label htmlFor="housing-name" className="housing-form__label">
+            Nom du logement
+          </label>
+          <input
+            id="housing-name"
+            type="text"
+            className="housing-form__input"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Ex : Appartement A14"
+          />
+        </div>
+
+        <div className="housing-form__group">
+          <label htmlFor="housing-status" className="housing-form__label">
+            Statut
+          </label>
+          <select
+            id="housing-status"
+            className="housing-form__select"
+            value={status}
+            onChange={(event) =>
+              setStatus(event.target.value as HousingUnitStatus)
+            }
+          >
+            <option value="AVAILABLE">Disponible</option>
+            <option value="OCCUPIED">Occupé</option>
+            <option value="MAINTENANCE">Maintenance</option>
+          </select>
+        </div>
+
       </div>
 
-      <div className="housing-form__group">
-        <label htmlFor="housing-status" className="housing-form__label">
-          Statut
-        </label>
-        <select
-          id="housing-status"
-          className="housing-form__select"
-          value={status}
-          onChange={(event) => setStatus(event.target.value as HousingUnitStatus)}
+      <div className="housing-form__footer">
+        {error && <p className="housing-form__error">{error}</p>}
+
+        {successMessage && (
+          <p className="housing-form__success">{successMessage}</p>
+        )}
+
+        <button
+          type="submit"
+          className="housing-form__submit"
+          disabled={submitting}
         >
-          <option value="AVAILABLE">Disponible</option>
-          <option value="OCCUPIED">Occupé</option>
-          <option value="MAINTENANCE">Maintenance</option>
-        </select>
+          {submitting ? 'Création...' : 'Créer le logement'}
+        </button>
       </div>
-
-      {error && <p className="housing-form__error">{error}</p>}
-
-      <button type="submit" className="housing-form__submit" disabled={submitting}>
-        {submitting ? 'Création...' : 'Créer le logement'}
-      </button>
     </form>
   );
 }

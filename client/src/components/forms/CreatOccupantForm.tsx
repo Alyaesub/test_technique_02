@@ -32,6 +32,10 @@ function CreateOccupantForm() {
       setLastName('');
       setEmail('');
       setSuccessMessage('Occupant créé avec succès.');
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -44,55 +48,69 @@ function CreateOccupantForm() {
   }
 
   return (
-    <form className="housing-form" onSubmit={handleSubmit}>
-      <div className="housing-form__group">
-        <label htmlFor="occupant-first-name" className="housing-form__label">
-          Prénom
-        </label>
-        <input
-          id="occupant-first-name"
-          type="text"
-          className="housing-form__input"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-          placeholder="Ex : John"
-        />
+    <form className="housing-form housing-form--card" onSubmit={handleSubmit}>
+      <div className="housing-form__grid">
+
+        <div className="housing-form__group">
+          <label htmlFor="occupant-first-name" className="housing-form__label">
+            Prénom
+          </label>
+          <input
+            id="occupant-first-name"
+            type="text"
+            className="housing-form__input"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+            placeholder="Ex : John"
+          />
+        </div>
+
+        <div className="housing-form__group">
+          <label htmlFor="occupant-last-name" className="housing-form__label">
+            Nom
+          </label>
+          <input
+            id="occupant-last-name"
+            type="text"
+            className="housing-form__input"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+            placeholder="Ex : Doe"
+          />
+        </div>
+
+        <div className="housing-form__group housing-form__group--full">
+          <label htmlFor="occupant-email" className="housing-form__label">
+            Email
+          </label>
+          <input
+            id="occupant-email"
+            type="email"
+            className="housing-form__input"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Ex : john@test.fr"
+          />
+        </div>
+
       </div>
 
-      <div className="housing-form__group">
-        <label htmlFor="occupant-last-name" className="housing-form__label">
-          Nom
-        </label>
-        <input
-          id="occupant-last-name"
-          type="text"
-          className="housing-form__input"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-          placeholder="Ex : Doe"
-        />
+      <div className="housing-form__footer">
+        <div className="housing-form__feedback">
+          {error && <p className="housing-form__error">{error}</p>}
+          {successMessage && (
+            <p className="housing-form__success">{successMessage}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          className="housing-form__submit"
+          disabled={submitting}
+        >
+          {submitting ? 'Création...' : "Créer l'occupant"}
+        </button>
       </div>
-
-      <div className="housing-form__group">
-        <label htmlFor="occupant-email" className="housing-form__label">
-          Email
-        </label>
-        <input
-          id="occupant-email"
-          type="email"
-          className="housing-form__input"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Ex : john@test.fr"
-        />
-      </div>
-
-      {error && <p className="housing-form__error">{error}</p>}
-      {successMessage && <p className="housing-form__success">{successMessage}</p>}
-
-      <button type="submit" className="housing-form__submit" disabled={submitting}>
-        {submitting ? 'Création...' : "Créer l'occupant"}
-      </button>
     </form>
   );
 }
