@@ -101,7 +101,16 @@ function HomePage() {
           <h2>État de l’API</h2>
           <p>{health}</p>
         </div>
-        <span className="home-page__status-badge">En ligne</span>
+
+        <span 
+          className={`home-page__status-badge status-dot ${
+            health === 'API is running'
+              ? 'home-page__status-badge--online'
+              : 'home-page__status-badge--offline'
+          }`}
+        >
+          {health === 'API is running' ? 'En ligne' : 'Hors ligne'}
+        </span>
       </section>
 
       <section className="home-page__actions">

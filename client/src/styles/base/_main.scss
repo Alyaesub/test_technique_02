@@ -101,6 +101,60 @@ p {
   opacity: 0.9;
 }
 
+.home-page__status-badge--online {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.home-page__status-badge--offline {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.home-page__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.status-dot::after {
+  content: "";
+  position: absolute;
+
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  animation: statusPulse 1.6s infinite;
+}
+
+@keyframes statusPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  70% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 /* STATUS CARD */
 
 .home-page__status-card {
