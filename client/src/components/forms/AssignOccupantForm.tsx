@@ -54,6 +54,9 @@ function AssignOccupantForm({ onSuccess }: AssignOccupantFormProps) {
       });
 
       setSuccess('Occupant affecté au logement.');
+      setTimeout(() => {
+      setSuccess('');
+    }, 3000);
       setOccupantId('');
       setHousingUnitId('');
 
@@ -65,50 +68,58 @@ function AssignOccupantForm({ onSuccess }: AssignOccupantFormProps) {
   }
 
   return (
-    <form className="housing-form" onSubmit={handleSubmit}>
-      <div className="housing-form__group">
-        <label>Occupant</label>
+    <form className="housing-form housing-form--card" onSubmit={handleSubmit}>
+  <div className="housing-form__grid">
 
-        <select
-          value={occupantId}
-          onChange={(e) => setOccupantId(e.target.value)}
-          className="housing-form__select"
-        >
-          <option value="">Choisir un occupant</option>
+    <div className="housing-form__group">
+      <label className="housing-form__label">Occupant</label>
 
-          {occupants.map((occupant) => (
-            <option key={occupant.id} value={occupant.id}>
-              {occupant.firstName} {occupant.lastName}
-            </option>
-          ))}
-        </select>
-      </div>
+      <select
+        value={occupantId}
+        onChange={(e) => setOccupantId(e.target.value)}
+        className="housing-form__select"
+      >
+        <option value="">occupant</option>
 
-      <div className="housing-form__group">
-        <label>Logement</label>
+        {occupants.map((occupant) => (
+          <option key={occupant.id} value={occupant.id}>
+            {occupant.firstName} {occupant.lastName}
+          </option>
+        ))}
+      </select>
+    </div>
 
-        <select
-          value={housingUnitId}
-          onChange={(e) => setHousingUnitId(e.target.value)}
-          className="housing-form__select"
-        >
-          <option value="">Choisir un logement</option>
+    <div className="housing-form__group">
+      <label className="housing-form__label">Logement</label>
 
-          {housingUnits.map((unit) => (
-            <option key={unit.id} value={unit.id}>
-              {unit.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      <select
+        value={housingUnitId}
+        onChange={(e) => setHousingUnitId(e.target.value)}
+        className="housing-form__select"
+      >
+        <option value="">logement</option>
 
+        {housingUnits.map((unit) => (
+          <option key={unit.id} value={unit.id}>
+            {unit.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+  </div>
+
+  <div className="housing-form__footer">
+    <div className="housing-form__feedback">
       {error && <p className="housing-form__error">{error}</p>}
       {success && <p className="housing-form__success">{success}</p>}
+    </div>
 
-      <button className="housing-form__submit" type="submit">
-        Affecter l’occupant
-      </button>
-    </form>
+    <button className="housing-form__submit" type="submit">
+      Affecter l’occupant
+    </button>
+  </div>
+</form>
   );
 }
 

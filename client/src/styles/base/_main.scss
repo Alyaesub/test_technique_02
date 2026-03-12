@@ -1,4 +1,5 @@
-@use "./variables" as *;
+@use './variables' as *;
+
 *,
 *::before,
 *::after {
@@ -7,28 +8,261 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: $color-bg;
+  font-family: Inter, Arial, sans-serif;
+
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 30%),
+    linear-gradient(to bottom, #f8fafc, #eef2f7);
+
   color: $color-text;
-}
-
-main {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-section {
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
 }
 
 h1,
 h2,
-h3 {
+h3,
+p {
   margin-top: 0;
+}
+
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+
+/* HERO HEADER */
+
+.home-page__hero {
+  position: relative;
+  height: 300px;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+
+  display: flex;
+  align-items: center;
+
+  background-image: url("/img/housing-hero.jpg");
+  background-size: cover;
+  background-position: center;
+
+  box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+}
+
+.home-page__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.35)
+  );
+}
+
+.home-page__hero-content {
+  position: relative;
+  z-index: 2;
+
+  padding: 1.5rem 2rem;
+  margin-left: 1.5rem;
+
+  max-width: 520px;
+
+  border-radius: 18px;
+
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.25);
+
+  color: white;
+}
+
+.home-page__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+
+  opacity: 0.9;
+}
+
+.home-page__title {
+  font-size: clamp(2rem,4vw,2.6rem);
+  margin-bottom: 0.4rem;
+  line-height: 1.1;
+}
+
+.home-page__subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* STATUS CARD */
+
+.home-page__status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(209,213,219,0.8);
+  border-radius: 20px;
+
+  backdrop-filter: blur(6px);
+
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+}
+
+.home-page__status-card h2 {
+  margin-bottom: 0.3rem;
+  font-size: 1.25rem;
+}
+
+.home-page__status-card p {
+  margin: 0;
+  color: #475569;
+}
+
+.home-page__status-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.45rem 0.9rem;
+
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ACTION CARDS */
+
+.home-page__actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1.5rem;
+
+  margin-bottom: 2rem;
+}
+
+.home-page__action-card {
+  padding: 1.5rem;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(209,213,219,0.8);
+  border-radius: 20px;
+
+  backdrop-filter: blur(6px);
+
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+}
+
+.home-page__card-header {
+  margin-bottom: 1.25rem;
+}
+
+.home-page__card-header h2 {
+  margin-bottom: 0.35rem;
+  font-size: 1.3rem;
+}
+
+.home-page__card-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+
+/* HOUSING SECTION */
+
+.home-page__housing-section {
+  padding: 1.75rem;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(209,213,219,0.8);
+  border-radius: 20px;
+
+  backdrop-filter: blur(6px);
+
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+}
+
+.home-page__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-bottom: 1.5rem;
+}
+
+.home-page__section-label {
+  margin-bottom: 0.25rem;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: $color-primary;
+}
+
+.home-page__section-header h2 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.home-page__section-count {
+  padding: 0.55rem 0.95rem;
+
+  border-radius: 999px;
+
+  background: #eff6ff;
+  color: #1d4ed8;
+
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* STATE MESSAGES */
+
+.home-page__state-message {
+  margin: 0;
+  color: #475569;
+}
+
+.home-page__state-message--error {
+  color: $color-danger;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 980px) {
+
+  .home-page__actions {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page__section-header,
+  .home-page__status-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-page__hero {
+    height: 220px;
+  }
+
 }

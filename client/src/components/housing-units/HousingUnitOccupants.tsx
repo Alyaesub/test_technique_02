@@ -18,7 +18,6 @@ function HousingUnitOccupants({ housingUnitId }: HousingUnitOccupantsProps) {
         setError('');
 
         const response = await getHousingUnitOccupants(String(housingUnitId));
-
         setOccupants(response.data.occupants);
       } catch (err) {
         console.error(err);
@@ -31,18 +30,42 @@ function HousingUnitOccupants({ housingUnitId }: HousingUnitOccupantsProps) {
     loadOccupants();
   }, [housingUnitId]);
 
-  if (loading) return <p>Chargement des occupants...</p>;
-  if (error) return <p>{error}</p>;
-  if (occupants.length === 0) return <p>Aucun occupant.</p>;
+  if (loading) {
+    return <p className="housing-occupants__state">Chargement des occupants...</p>;
+  }
+
+  if (error) {
+    return <p className="housing-occupants__state housing-occupants__state--error">{error}</p>;
+  }
+
+  if (occupants.length === 0) {
+    return <p className="housing-occupants__state">Aucun occupant pour ce logement.</p>;
+  }
 
   return (
-    <ul className="housing-occupants">
-      {occupants.map((occupant) => (
-        <li key={occupant.id}>
-          {occupant.firstName} {occupant.lastName}
-        </li>
-      ))}
-    </ul>
+    <div className="housing-occupants">
+      <p className="housing-occupants__title">
+        Occupants associés ({occupants.length})
+      </p>
+
+      <ul className="housing-occupants__list">
+        {occupants.map((occupant) => (
+          <li key={occupant.id} className="housing-occupants__item">
+            <div className="housing-occupants__avatar">
+              {occupant.firstName.charAt(0)}
+              {occupant.lastName.charAt(0)}
+            </div>
+
+            <div className="housing-occupants__content">
+              <p className="housing-occupants__name">
+                {occupant.firstName} {occupant.lastName}
+              </p>
+              <p className="housing-occupants__email">{occupant.email}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

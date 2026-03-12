@@ -1,9 +1,14 @@
-$color-bg: #f7f8fa;
+$color-bg: #f8fafc;
 $color-surface: #ffffff;
-$color-text: #1f2937;
-$color-border: #d1d5db;
+$color-text: #0f172a;
+$color-border: #e2e8f0;
 $color-primary: #2563eb;
+$color-primary-dark: #1d4ed8;
 $color-danger: #dc2626;
+$color-success: #16a34a;
 
-$radius-md: 12px;
-$shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+$radius-md: 14px;
+$radius-lg: 20px;
+
+$shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.06);
+$shadow-md: 0 18px 40px rgba(15, 23, 42, 0.08);
