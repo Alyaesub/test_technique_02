@@ -43,6 +43,9 @@ jobs:
             - name: Build
               run: npm run build
 
+            - name: Vitest
+              run: npm run test
+
     frontend:
         name: Frontend
         runs-on: ubuntu-latest
