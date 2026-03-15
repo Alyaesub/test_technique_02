@@ -8,8 +8,7 @@
     "test": "vitest",
     "build": "tsc",
     "start": "node dist/server.js",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
